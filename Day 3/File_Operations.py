@@ -9,7 +9,6 @@ file.close()
 #Append to file
 file=open("f1.txt","a")
 file.write("\n New Line Added")
-
 file.close()
 
 #Write to File

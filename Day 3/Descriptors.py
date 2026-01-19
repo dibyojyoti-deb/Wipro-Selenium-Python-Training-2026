@@ -6,9 +6,7 @@ class mydescriptor:
         print("Setting the Value")
         obj._x=value
 class Test:
-    x=mydescriptor
+    x=mydescriptor()
 t=Test()
 t.x=10
 print(t.x)
- 
- 

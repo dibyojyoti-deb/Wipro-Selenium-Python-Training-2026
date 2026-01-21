@@ -10,7 +10,8 @@ def log_execution(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        print(f"[LOG] Method {func.__name__}() executed successfully")
+        if not kwargs.get("silent", False):
+            print(f"[LOG] Method {func.__name__}() executed successfully")
         return result
     return wrapper
 
@@ -30,7 +31,8 @@ def performance_timer(func):
         start = time.time()
         result = func(*args, **kwargs)
         end = time.time()
-        print(f"[TIMER] Execution Time: {end - start:.6f} seconds")
+        if not kwargs.get("silent", False):
+            print(f"[TIMER] Execution Time: {end - start:.6f} seconds")
         return result
     return wrapper
 
@@ -45,7 +47,7 @@ class MarksDescriptor:
     def __set__(self, obj, value):
         for mark in value:
             if mark < 0 or mark > 100:
-                raise ValueError("Invalid Marks: Marks should be between 0 and 100")
+                raise ValueError("Marks should be between 0 and 100")
         obj.__dict__[self.name] = value
 
 class SalaryDescriptor:
@@ -66,9 +68,6 @@ class Person(ABC):
     def get_details(self):
         pass
 
-    def __del__(self):
-        print(f"Cleaning up resources for {self.name}")
-
 # ================== STUDENT CLASS ==================
 class Student(Person):
     marks = MarksDescriptor()
@@ -77,24 +76,24 @@ class Student(Person):
         super().__init__(sid, name, department)
         self.semester = semester
         self.marks = marks
-        self.courses = []
+        self.course = None
 
     def enroll(self, course):
-        self.courses.append(course)
+        if self.course:
+            raise Exception(
+                f"Student '{self.name}' already enrolled in '{self.course.name}'"
+            )
+        self.course = course
 
     @log_execution
     @performance_timer
-    def calculate_performance(self):
+    def calculate_performance(self, silent=False):
         avg = sum(self.marks) / len(self.marks)
         grade = "A" if avg >= 85 else "B" if avg >= 70 else "C"
         return avg, grade
 
     def get_details(self):
-        print("Student Details:")
-        print("--------------------------------")
-        print(f"Name      : {self.name}")
-        print("Role      : Student")
-        print(f"Department: {self.department}")
+        print(f"{self.pid:<6} {self.name:<20} {self.department:<18} {self.semester}")
 
     def __gt__(self, other):
         return sum(self.marks) > sum(other.marks)
@@ -106,13 +105,11 @@ class Faculty(Person):
     def __init__(self, fid, name, department, salary):
         super().__init__(fid, name, department)
         self.salary = salary
+        self.assigned_course = None
 
     def get_details(self):
-        print("Faculty Details:")
-        print("--------------------------------")
-        print(f"Name      : {self.name}")
-        print("Role      : Faculty")
-        print(f"Department: {self.department}")
+        assigned = self.assigned_course.code if self.assigned_course else "None"
+        print(f"{self.pid:<6} {self.name:<20} {self.department:<18} {assigned}")
 
 # ================== COURSE CLASS ==================
 class Course:
@@ -125,41 +122,40 @@ class Course:
     def __add__(self, other):
         return self.credits + other.credits
 
-# ================== ITERATOR ==================
-class CourseIterator:
-    def __init__(self, courses):
-        self.courses = courses
-        self.index = 0
+# ================== DISPLAY TABLE HELPERS ==================
+def display_students(students):
+    print("\nAvailable Students")
+    print("--------------------------------")
+    print("ID     Name                 Department         Sem")
+    for s in students.values():
+        s.get_details()
 
-    def __iter__(self):
-        return self
+def display_faculty(faculty_members):
+    print("\nAvailable Faculty")
+    print("--------------------------------")
+    print("ID     Name                 Department         Course")
+    for f in faculty_members.values():
+        f.get_details()
 
-    def __next__(self):
-        if self.index >= len(self.courses):
-            raise StopIteration
-        course = self.courses[self.index]
-        self.index += 1
-        return course
-
-# ================== GENERATOR ==================
-def student_generator(students):
-    print("Fetching Student Records...")
-    for sid, student in students.items():
-        yield f"{sid} - {student.name}"
+def display_courses(courses):
+    print("\nAvailable Courses")
+    print("--------------------------------")
+    print("Code   Name                 Credits  Faculty")
+    for c in courses.values():
+        print(f"{c.code:<6} {c.name:<20} {c.credits:<8} {c.faculty.name}")
 
 # ================== FILE HANDLING ==================
 def save_students_json(students):
-    data = []
-    for s in students.values():
-        data.append({
-            "id": s.pid,
-            "name": s.name,
-            "department": s.department,
-            "semester": s.semester,
-            "marks": s.marks
-        })
     with open("students.json", "w") as f:
-        json.dump(data, f, indent=4)
+        json.dump([
+            {
+                "id": s.pid,
+                "name": s.name,
+                "department": s.department,
+                "semester": s.semester,
+                "marks": s.marks
+            } for s in students.values()
+        ], f, indent=4)
     print("Student data successfully saved to students.json")
 
 def generate_csv_report(students):
@@ -167,70 +163,40 @@ def generate_csv_report(students):
         writer = csv.writer(f)
         writer.writerow(["ID", "Name", "Department", "Average", "Grade"])
         for s in students.values():
-            avg, grade = s.calculate_performance()
-            writer.writerow([s.pid, s.name, s.department, round(avg, 2), grade])
-    print("CSV Report (students_report.csv) generated")
+            avg, grade = s.calculate_performance(silent=True)
+            writer.writerow([s.pid, s.name, s.department, round(avg, 1), grade])
+    print("CSV Report generated")
 
-# ================== UI HELPER FUNCTIONS ==================
+# ================== INPUT HELPER ==================
 def input_marks_subject_wise():
     marks = []
     for i in range(1, 6):
         while True:
             try:
-                mark = int(input(f"Enter marks for Subject {i}: "))
-                if mark < 0 or mark > 100:
+                m = int(input(f"Enter marks for Subject {i}: "))
+                if 0 <= m <= 100:
+                    marks.append(m)
+                    break
+                else:
                     print("Marks should be between 0 and 100")
-                    continue
-                marks.append(mark)
-                break
             except ValueError:
-                print("Please enter a valid number")
+                print("Invalid number")
     return marks
 
-def display_students_table(students):
-    if not students:
-        print("No students registered yet")
-        return
-    print("\nRegistered Students")
-    print("-" * 60)
-    print(f"{'ID':<10}{'Name':<25}{'Courses'}")
-    print("-" * 60)
-    for s in students.values():
-        course_names = ", ".join(c.name for c in s.courses) if s.courses else "Not Enrolled"
-        print(f"{s.pid:<10}{s.name:<25}{course_names}")
+# ================== ADMIN HELPERS ==================
+@admin_only
+def create_faculty(fid, name, dept, sal):
+    return Faculty(fid, name, dept, sal)
 
-def display_faculty_table(faculty_members):
-    if not faculty_members:
-        print("No faculty registered yet")
-        return
-    print("\nAvailable Faculty")
-    print("-" * 40)
-    print(f"{'ID':<10}{'Name'}")
-    print("-" * 40)
-    for f in faculty_members.values():
-        print(f"{f.pid:<10}{f.name}")
-
-def display_courses_table(courses):
-    if not courses:
-        print("No courses available yet")
-        return
-    print("\nAvailable Courses")
-    print("-" * 60)
-    print(f"{'Code':<10}{'Course Name':<30}{'Credits'}")
-    print("-" * 60)
-    for c in courses.values():
-        print(f"{c.code:<10}{c.name:<30}{c.credits}")
-
-def display_students_for_comparison(students):
-    if not students:
-        print("No students registered yet")
-        return
-    print("\nAvailable Students")
-    print("-" * 40)
-    print(f"{'ID':<10}{'Name'}")
-    print("-" * 40)
-    for s in students.values():
-        print(f"{s.pid:<10}{s.name}")
+@admin_only
+def create_course(code, name, credits, faculty):
+    if faculty.assigned_course:
+        raise Exception(
+            f"Faculty '{faculty.name}' already assigned to '{faculty.assigned_course.code}'"
+        )
+    course = Course(code, name, credits, faculty)
+    faculty.assigned_course = course
+    return course
 
 # ================== MAIN SYSTEM ==================
 students = {}
@@ -243,123 +209,70 @@ while True:
 
     try:
         if choice == "1":
-            sid = input("Student ID: ").strip()
-            if not sid:
-                print("Student ID cannot be empty")
-                continue
+            sid = input("Student ID: ")
             if sid in students:
                 raise Exception("Student ID already exists")
-            name = input("Name: ").strip()
-            if not name:
-                print("Name cannot be empty")
-                continue
-            dept = input("Department: ").strip()
-            if not dept:
-                print("Department cannot be empty")
-                continue
-            while True:
-                try:
-                    sem = int(input("Semester: "))
-                    if sem < 1 or sem > 8:
-                        print("Semester should be between 1 and 8")
-                        continue
-                    break
-                except ValueError:
-                    print("Please enter a valid semester number")
-            marks = input_marks_subject_wise()
-            students[sid] = Student(sid, name, dept, sem, marks)
+            students[sid] = Student(
+                sid,
+                input("Name: "),
+                input("Department: "),
+                int(input("Semester: ")),
+                input_marks_subject_wise()
+            )
             print("Student Created Successfully")
-            display_students_table(students)
 
         elif choice == "2":
-            fid = input("Faculty ID: ").strip()
-            if not fid:
-                print("Faculty ID cannot be empty")
-                continue
-            if fid in faculty_members:
-                raise Exception("Faculty ID already exists")
-            name = input("Name: ").strip()
-            if not name:
-                print("Name cannot be empty")
-                continue
-            dept = input("Department: ").strip()
-            if not dept:
-                print("Department cannot be empty")
-                continue
-            while True:
-                try:
-                    sal = int(input("Salary: "))
-                    if sal < 0:
-                        print("Salary cannot be negative")
-                        continue
-                    break
-                except ValueError:
-                    print("Please enter a valid salary")
-            faculty_members[fid] = Faculty(fid, name, dept, sal)
-            print("Faculty Created Successfully")
-            display_faculty_table(faculty_members)
+            fid = input("Faculty ID: ")
+            faculty = create_faculty(
+                fid,
+                input("Name: "),
+                input("Department: "),
+                int(input("Salary: "))
+            )
+            if faculty:
+                faculty_members[fid] = faculty
+                print("Faculty Created Successfully")
 
         elif choice == "3":
-            code = input("Course Code: ").strip()
-            if not code:
-                print("Course Code cannot be empty")
-                continue
-            if code in courses:
-                raise Exception("Course Code already exists")
-            name = input("Course Name: ").strip()
-            if not name:
-                print("Course Name cannot be empty")
-                continue
-            while True:
-                try:
-                    credits = int(input("Credits: "))
-                    if credits < 0:
-                        print("Credits cannot be negative")
-                        continue
-                    break
-                except ValueError:
-                    print("Please enter a valid credit value")
-            display_faculty_table(faculty_members)
-            fid = input("Faculty ID: ").strip()
-            if fid not in faculty_members:
-                raise Exception("Faculty ID not found")
-            courses[code] = Course(code, name, credits, faculty_members[fid])
-            print("Course Added Successfully")
+            display_faculty(faculty_members)
+            fid = input("Faculty ID: ")
+            course = create_course(
+                input("Course Code: "),
+                input("Course Name: "),
+                int(input("Credits: ")),
+                faculty_members[fid]
+            )
+            if course:
+                courses[course.code] = course
+                print("Course Added Successfully")
 
         elif choice == "4":
-            display_courses_table(courses)
-            sid = input("Student ID: ").strip()
-            if sid not in students:
-                raise Exception("Student ID not found")
-            code = input("Course Code: ").strip()
-            if code not in courses:
-                raise Exception("Course Code not found")
-            students[sid].enroll(courses[code])
+            display_students(students)
+            display_courses(courses)
+            students[input("Student ID: ")].enroll(
+                courses[input("Course Code: ")]
+            )
             print("Enrollment Successful")
 
         elif choice == "5":
-            sid = input("Student ID: ").strip()
-            if sid not in students:
-                raise Exception("Student ID not found")
-            avg, grade = students[sid].calculate_performance()
-            print(f"Average: {avg:.2f}, Grade: {grade}")
+            display_students(students)
+            s = students[input("Student ID: ")]
+            avg, grade = s.calculate_performance()
+            print(f"{s.name} | Average: {avg:.1f} | Grade: {grade}")
 
         elif choice == "6":
-            display_students_for_comparison(students)
-            s1_id = input("First Student ID: ").strip()
-            if s1_id not in students:
-                raise Exception("First Student ID not found")
-            s2_id = input("Second Student ID: ").strip()
-            if s2_id not in students:
-                raise Exception("Second Student ID not found")
-            s1 = students[s1_id]
-            s2 = students[s2_id]
-            print(f"{s1.name} > {s2.name} :", s1 > s2)
+            display_students(students)
+            s1 = students[input("First Student ID: ")]
+            s2 = students[input("Second Student ID: ")]
+
+            print("\nComparing Students Performance")
+            print("--------------------------------")
+            if s1 > s2:
+                print(f"{s1.name} is performing better than {s2.name}")
+            else:
+                print(f"{s2.name} is performing better than {s1.name}")
 
         elif choice == "7":
-            if not students:
-                print("No students to generate reports")
-                continue
             generate_csv_report(students)
             save_students_json(students)
 

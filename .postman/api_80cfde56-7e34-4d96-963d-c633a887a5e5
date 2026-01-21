@@ -9,6 +9,7 @@ id = 80cfde56-7e34-4d96-963d-c633a887a5e5
 
 [config.relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"49302801-a0cee8a6-fee1-4f44-a7e6-0d1b275db744","path":"Wipro_API_Lecture.json","metaData":{}}
 
 [config.relations.collections.metaData]
 

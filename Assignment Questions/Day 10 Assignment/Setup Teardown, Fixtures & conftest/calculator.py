@@ -12,5 +12,5 @@ def multiply(a, b):
 
 def divide(a, b):
     if b == 0:
-        raise ZeroDivisionError("Division by zero is not allowed")
+        raise ZeroDivisionError("Division by zero not allowed")
     return a / b

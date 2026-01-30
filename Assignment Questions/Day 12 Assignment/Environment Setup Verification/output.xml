@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-01-29T19:11:06.917651" rpa="false" schemaversion="5">
+<suite id="s1" name="Q2" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 12 Assignment\Environment Setup Verification\Q2.robot">
+<test id="s1-t1" name="Validate Automation Environment" line="7">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-29T19:11:07.109960" level="INFO">${py_version} = 3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]</msg>
+<var>${py_version}</var>
+<arg>sys.version</arg>
+<arg>modules=sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.109578" elapsed="0.000415"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\nPython Version: ${py_version}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.110188" elapsed="0.000313"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-29T19:11:07.111094" level="INFO">${rf_version} = 7.4.1 (Python 3.13.2 on win32)</msg>
+<var>${rf_version}</var>
+<arg>robot.version.get_full_version()</arg>
+<arg>modules=robot.version</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.110721" elapsed="0.000411"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Robot Framework Version: ${rf_version}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.111311" elapsed="0.000257"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-29T19:11:07.112083" level="INFO">${sel_version} = 4.40.0</msg>
+<var>${sel_version}</var>
+<arg>selenium.__version__</arg>
+<arg>modules=selenium</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.111751" elapsed="0.000366"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>SeleniumLibrary Version: ${sel_version}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.112279" elapsed="0.000229"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n--- ALL DEPENDENCIES VERIFIED ---</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.112699" elapsed="0.000333"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Status: READY FOR AUTOMATION</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.113244" elapsed="0.000287"/>
+</kw>
+<doc>Verifies Python, Robot, and Selenium via internal modules.</doc>
+<status status="PASS" start="2026-01-29T19:11:07.108647" elapsed="0.005116"/>
+</test>
+<doc>Environment Validation Suite (Final Version)</doc>
+<status status="PASS" start="2026-01-29T19:11:06.919022" elapsed="0.195344"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Q2" id="s1" pass="1" fail="0" skip="0">Q2</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

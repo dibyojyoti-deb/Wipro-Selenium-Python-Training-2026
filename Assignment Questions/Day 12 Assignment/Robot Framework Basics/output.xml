@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-01-29T16:12:08.265094" rpa="false" schemaversion="5">
+<suite id="s1" name="Q1" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 12 Assignment\Q1.robot">
+<test id="s1-t1" name="Test Case 1 - Logging And Variables" line="11">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Starting Test Case 1</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:08.477417" elapsed="0.000410"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-29T16:12:08.478464" level="INFO">Opening browser using BuiltIn keywords</msg>
+<arg>Opening browser using BuiltIn keywords</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-29T16:12:08.478129" elapsed="0.000407"/>
+</kw>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-01-29T16:12:08.478989" level="INFO">Opening browser 'chrome' to base url 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-01-29T16:12:08.478790" elapsed="6.229555"/>
+</kw>
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2026-01-29T16:12:14.712414" level="INFO">Page title is 'OrangeHRM'.</msg>
+<arg>OrangeHRM</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2026-01-29T16:12:14.708679" elapsed="0.003829"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-29T16:12:14.713151" level="INFO">Browser title verified successfully</msg>
+<arg>Browser title verified successfully</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-29T16:12:14.712806" elapsed="0.000412"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-01-29T16:12:14.713431" elapsed="2.137659"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Test Case 1 Completed</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.851452" elapsed="0.000405"/>
+</kw>
+<status status="PASS" start="2026-01-29T16:12:08.476602" elapsed="8.375638"/>
+</test>
+<test id="s1-t2" name="Test Case 2 - List Variable Usage" line="20">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Starting Test Case 2</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.852985" elapsed="0.000269"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-29T16:12:16.853571" level="INFO">Printing list values</msg>
+<arg>Printing list values</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.853397" elapsed="0.000212"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>User: ${name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.853974" elapsed="0.000237"/>
+</kw>
+<var name="${name}">Alice</var>
+<status status="PASS" start="2026-01-29T16:12:16.853895" elapsed="0.000358"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>User: ${name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.854425" elapsed="0.001623"/>
+</kw>
+<var name="${name}">Bob</var>
+<status status="PASS" start="2026-01-29T16:12:16.854356" elapsed="0.001762"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>User: ${name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.856339" elapsed="0.000346"/>
+</kw>
+<var name="${name}">Charlie</var>
+<status status="PASS" start="2026-01-29T16:12:16.856244" elapsed="0.000485"/>
+</iter>
+<var>${name}</var>
+<value>@{NAMES}</value>
+<status status="PASS" start="2026-01-29T16:12:16.853717" elapsed="0.003050"/>
+</for>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Test Case 2 Completed</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T16:12:16.856905" elapsed="0.000201"/>
+</kw>
+<status status="PASS" start="2026-01-29T16:12:16.852667" elapsed="0.004604"/>
+</test>
+<status status="PASS" start="2026-01-29T16:12:08.266461" elapsed="8.591245"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Q1" id="s1" pass="2" fail="0" skip="0">Q1</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,3 @@
+${username},${password},${expected_status}
+Admin,admin123,Dashboard
+Admin,wrongpass,Invalid credentials

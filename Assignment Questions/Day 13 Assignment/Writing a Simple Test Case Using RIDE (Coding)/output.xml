@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-02-02T14:11:39.580794" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 13 Assignment\Writing a Simple Test Case Using RIDE (Coding)\test.robot">
+<test id="s1-t1" name="Verify Page Load" line="5">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-02-02T14:11:40.329067" level="INFO">Opening browser 'chrome' to base url 'https://www.google.com'.</msg>
+<arg>https://www.google.com</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-02-02T14:11:40.328501" elapsed="6.625787"/>
+</kw>
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2026-02-02T14:11:46.961844" level="INFO">Page title is 'Google'.</msg>
+<arg>Google</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2026-02-02T14:11:46.955321" elapsed="0.006673"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2026-02-02T14:11:47.049726" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="google_page.png"&gt;&lt;img src="google_page.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>google_page.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2026-02-02T14:11:46.962348" elapsed="0.087505"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-02-02T14:11:47.050350" elapsed="2.150229"/>
+</kw>
+<status status="PASS" start="2026-02-02T14:11:40.327648" elapsed="8.873143"/>
+</test>
+<status status="PASS" start="2026-02-02T14:11:39.582500" elapsed="9.618904"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="1" fail="0" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

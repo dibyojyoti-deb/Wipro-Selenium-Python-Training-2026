@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-02-02T16:51:58.114967" rpa="false" schemaversion="5">
+<suite id="s1" name="Browser" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 14 Assignment\Browser Automation &amp; Built-in Libraries\browser.robot">
+<test id="s1-t1" name="Automate Browser Form" line="9">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:51:58.362350" level="INFO">Opening browser 'chrome' to base url 'https://demoqa.com/automation-practice-form'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-02-02T16:51:58.362064" elapsed="4.755248"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-02-02T16:52:03.118246" elapsed="0.031609"/>
+</kw>
+<kw name="Set Selenium Speed" owner="SeleniumLibrary">
+<arg>0.5 seconds</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" start="2026-02-02T16:52:03.150375" elapsed="0.000423"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id:firstName</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-02-02T16:52:03.151097" elapsed="1.022562"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:04.174387" level="INFO">Typing text 'Robot' into text field 'id:firstName'.</msg>
+<arg>id:firstName</arg>
+<arg>Robot</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-02T16:52:04.174076" elapsed="1.595681"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:05.770576" level="INFO">Typing text 'User' into text field 'id:lastName'.</msg>
+<arg>id:lastName</arg>
+<arg>User</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-02T16:52:05.770246" elapsed="1.590509"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:07.361928" level="INFO">Executing JavaScript:
+document.getElementById('gender-radio-1').click()
+Without any arguments.</msg>
+<arg>document.getElementById('gender-radio-1').click()</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-02-02T16:52:07.361234" elapsed="0.510906"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:07.874989" level="INFO">Executing JavaScript:
+document.getElementById('hobbies-checkbox-1').click()
+Without any arguments.</msg>
+<arg>document.getElementById('hobbies-checkbox-1').click()</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-02-02T16:52:07.872625" elapsed="0.512289"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:08.386132" level="INFO">Executing JavaScript:
+window.scrollTo(0, 500)
+Without any arguments.</msg>
+<arg>window.scrollTo(0, 500)</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-02-02T16:52:08.385413" elapsed="0.506637"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:08.893076" level="INFO">Clicking element 'id:state'.</msg>
+<arg>id:state</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-02T16:52:08.892719" elapsed="1.068655"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>xpath://div[text()='NCR']</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-02-02T16:52:09.961820" elapsed="1.018430"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:10.981076" level="INFO">Clicking element 'xpath://div[text()='NCR']'.</msg>
+<arg>xpath://div[text()='NCR']</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-02T16:52:10.980728" elapsed="1.057253"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-02-02T16:52:14.039428" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-02-02T16:52:12.038446" elapsed="2.001131"/>
+</kw>
+<kw name="Get Element Attribute" owner="SeleniumLibrary">
+<msg time="2026-02-02T16:52:15.054785" level="INFO">${val} = Robot</msg>
+<var>${val}</var>
+<arg>id:firstName</arg>
+<arg>value</arg>
+<doc>Returns the value of ``attribute`` from the element ``locator``.</doc>
+<status status="PASS" start="2026-02-02T16:52:14.039951" elapsed="1.014894"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${val}</arg>
+<arg>Robot</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-02T16:52:15.055280" elapsed="0.000647"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\nValidation Successful!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:52:15.057051" elapsed="0.000529"/>
+</kw>
+<arg>'${val}' == 'Robot'</arg>
+<arg>Log To Console</arg>
+<arg>\nValidation Successful!</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2026-02-02T16:52:15.056320" elapsed="0.001391"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-02-02T16:52:15.058224" elapsed="2.606121"/>
+</kw>
+<doc>Interacts with Textbox, Radio, Checkbox, and Dropdown.</doc>
+<status status="PASS" start="2026-02-02T16:51:58.361014" elapsed="19.303656"/>
+</test>
+<status status="PASS" start="2026-02-02T16:51:58.116885" elapsed="19.548436"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Browser" id="s1" pass="1" fail="0" skip="0">Browser</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

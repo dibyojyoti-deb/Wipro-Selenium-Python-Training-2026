@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-02-02T12:44:43.998879" rpa="false" schemaversion="5">
+<suite id="s1" name="Requests" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 14\requests.robot">
+<test id="s1-t1" name="Verify get-all-user" line="7">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-02-02T12:44:44.475423" level="INFO">Creating Session using : alias=Mysession, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>Mysession</arg>
+<arg>${url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-02-02T12:44:44.474893" elapsed="0.000772"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-02-02T12:44:46.488231" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")': /users</msg>
+<msg time="2026-02-02T12:44:48.693755" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")': /users</msg>
+<var>${response}</var>
+<arg>Mysession</arg>
+<arg>/users</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2026-02-02T12:44:44.475954" elapsed="6.222808">Execution terminated by signal</status>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="NOT RUN" start="2026-02-02T12:44:50.699046" elapsed="0.000026"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2026-02-02T12:44:50.699227" elapsed="0.000018"/>
+</kw>
+<status status="FAIL" start="2026-02-02T12:44:44.473965" elapsed="6.225496">Execution terminated by signal</status>
+</test>
+<test id="s1-t2" name="Verify get-single=user" line="15">
+<tag>robot:exit</tag>
+<status status="FAIL" start="2026-02-02T12:44:50.699815" elapsed="0.000285">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t3" name="Verify user-not-found" line="23">
+<tag>robot:exit</tag>
+<status status="FAIL" start="2026-02-02T12:44:50.700437" elapsed="0.000250">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t4" name="verify create-user" line="29">
+<tag>robot:exit</tag>
+<status status="FAIL" start="2026-02-02T12:44:50.701036" elapsed="0.000229">Test execution stopped due to a fatal error.</status>
+</test>
+<status status="FAIL" start="2026-02-02T12:44:44.001135" elapsed="6.700577"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="4" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat info="combined" combined="NOT robot:exit" pass="0" fail="1" skip="0">NOT robot:exit</stat>
+</tag>
+<suite>
+<stat name="Requests" id="s1" pass="0" fail="4" skip="0">Requests</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-02-02T12:44:46.488231" level="WARN">Retrying (RetryAdapter(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")': /users</msg>
+<msg time="2026-02-02T12:44:48.693755" level="WARN">Retrying (RetryAdapter(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='127.0.0.1', port=5000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it")': /users</msg>
+</errors>
+</robot>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.2 on win32)" generated="2026-02-02T16:41:47.176965" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="C:\Users\Dibyojyoti Deb\Desktop\Emergency Upload\Day 14 Assignment\Command Line Execution, Setup &amp; Teardown (Coding)\test.robot">
+<kw name="Log To Console" owner="BuiltIn" type="SETUP">
+<arg>--- INITIALIZING ENTIRE SUITE ---</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.217963" elapsed="0.000659"/>
+</kw>
+<test id="s1-t1" name="Verify System Health" line="12">
+<kw name="Log To Console" owner="BuiltIn" type="SETUP">
+<arg>Step: Preparing Test Environment</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.219096" elapsed="0.000376"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Executing: ${MESSAGE}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.219754" elapsed="0.000287"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${MESSAGE}</arg>
+<arg>Hello, Robot Framework!</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.220201" elapsed="0.000263"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn" type="TEARDOWN">
+<arg>Step: Cleaning Up After Test</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.220653" elapsed="0.000236"/>
+</kw>
+<tag>Critical</tag>
+<status status="PASS" start="2026-02-02T16:41:47.218763" elapsed="0.002219"/>
+</test>
+<kw name="Log To Console" owner="BuiltIn" type="TEARDOWN">
+<arg>--- TEARING DOWN ENTIRE SUITE ---</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.221660" elapsed="0.000313"/>
+</kw>
+<doc>A complete example of Setup, Teardown, and Tagging.</doc>
+<status status="PASS" start="2026-02-02T16:41:47.178976" elapsed="0.043035"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">Critical</stat>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="1" fail="0" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

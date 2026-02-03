@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.12.1 on linux)" generated="2026-02-03T18:52:43.165417" rpa="false" schemaversion="5">
+<suite id="s1" name="Patient Registration" source="/workspaces/Wipro-Selenium-Python-Training-2026/Assignment Questions/Case Studies/Case Study 4/patient_registration.robot">
+<kw name="Open Hospital Portal" type="SETUP">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-02-03T18:52:43.389835" level="INFO">${chrome_options} = &lt;selenium.webdriver.chrome.options.Options object at 0x7a504365b0b0&gt;</msg>
+<var>${chrome_options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-02-03T18:52:43.389299" elapsed="0.000580"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<msg time="2026-02-03T18:52:43.390343" level="FAIL">Calling method 'add_argument' failed: TypeError: ArgOptions.add_argument() got an unexpected keyword argument '--headless'</msg>
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--headless=new</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="FAIL" start="2026-02-03T18:52:43.390012" elapsed="0.000638">Calling method 'add_argument' failed: TypeError: ArgOptions.add_argument() got an unexpected keyword argument '--headless'</status>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.390775" elapsed="0.000029"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.390888" elapsed="0.000024"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${chrome_options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-gpu</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.390988" elapsed="0.000023"/>
+</kw>
+<kw name="Create Webdriver" owner="SeleniumLibrary">
+<arg>Chrome</arg>
+<arg>options=${chrome_options}</arg>
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.391097" elapsed="0.000025"/>
+</kw>
+<kw name="Set Window Size" owner="SeleniumLibrary">
+<arg>1280</arg>
+<arg>1024</arg>
+<doc>Sets current windows size to given ``width`` and ``height``.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.391204" elapsed="0.000023"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<arg>${URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="NOT RUN" start="2026-02-03T18:52:43.391301" elapsed="0.000026"/>
+</kw>
+<status status="FAIL" start="2026-02-03T18:52:43.388728" elapsed="0.002701">Calling method 'add_argument' failed: TypeError: ArgOptions.add_argument() got an unexpected keyword argument '--headless'</status>
+</kw>
+<test id="s1-t1" name="Register Patient" line="23">
+<status status="FAIL" start="2026-02-03T18:52:43.391519" elapsed="0.000352">Parent suite setup failed:
+Calling method 'add_argument' failed: TypeError: ArgOptions.add_argument() got an unexpected keyword argument '--headless'</status>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-02-03T18:52:43.392426" elapsed="0.000132"/>
+</kw>
+<status status="FAIL" start="2026-02-03T18:52:43.166298" elapsed="0.226303">Suite setup failed:
+Calling method 'add_argument' failed: TypeError: ArgOptions.add_argument() got an unexpected keyword argument '--headless'</status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Patient Registration" id="s1" pass="0" fail="1" skip="0">Patient Registration</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

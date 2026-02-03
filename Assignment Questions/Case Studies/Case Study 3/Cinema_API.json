@@ -1,0 +1,49 @@
+{
+	"info": {
+		"name": "Movie Booking API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Movies",
+			"request": {
+				"method": "GET",
+				"url": "http://127.0.0.1:5000/api/movies"
+			}
+		},
+		{
+			"name": "Add New Movie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"movie_name\": \"The Batman\",\n  \"language\": \"English\",\n  \"duration\": \"2h 56m\",\n  \"price\": 300\n}"
+				},
+				"url": "http://127.0.0.1:5000/api/movies"
+			}
+		},
+		{
+			"name": "Book Ticket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"movie_id\": 101,\n  \"seats\": 2\n}"
+				},
+				"url": "http://127.0.0.1:5000/api/bookings"
+			}
+		}
+	]
+}

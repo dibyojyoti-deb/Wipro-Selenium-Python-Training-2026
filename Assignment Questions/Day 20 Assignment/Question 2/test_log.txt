@@ -1,0 +1,8 @@
+
+Employee Analysis:
+  Employee Department  Salary  Salary_Adjusted
+0     John         IT   50000          55000.0
+1    Alice         HR   60000          66000.0
+2      Bob         IT   55000          60500.0
+3      Eva    Finance   65000          71500.0
+4     Mark         HR   62000          68200.0

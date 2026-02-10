@@ -1,0 +1,13 @@
+--- Starting Execution for chrome ---
+Browser: chrome
+Platform: Windows 11
+Page Title Verified: Google
+Screenshot saved as Grid_Result_chrome.png
+
+--- Starting Execution for firefox ---
+Browser: firefox
+Platform: Windows 11
+Page Title Verified: Google
+Screenshot saved as Grid_Result_firefox.png
+
+Full execution log saved to output_log.txt

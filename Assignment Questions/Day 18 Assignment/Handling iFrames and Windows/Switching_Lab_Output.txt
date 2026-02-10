@@ -1,0 +1,11 @@
+--- Switch Test Started: Fri Feb  6 13:10:54 2026 ---
+
+Step 1: Testing Iframe Interaction...
+Action: Switching to Iframe...
+Action: Returned to Main Content.
+
+Step 2: Testing Window Switching...
+Window Handle: 13A0C8CD7BDF0B10652704ECE2E9FEAC | Title: The Internet
+Window Handle: 58D15A4AC8692B0CC309ABD1CD9A1B8E | Title: New Window
+
+Result: PASS - All contexts handled.

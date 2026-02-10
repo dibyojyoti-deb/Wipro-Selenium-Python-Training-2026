@@ -1,0 +1,8 @@
+Execution Started: Thu Feb  5 14:26:34 2026
+Action: Opened TutorialsNinja Home Page.
+Action: Clicked on Desktops tab.
+Action: Navigated to Mac category.
+Action: Sorted products by Name (A-Z).
+Action: Clicked Add to Cart.
+Verification: Success: You have added iMac to your shopping cart!
+Result: Lab Demo 3 Completed Successfully.

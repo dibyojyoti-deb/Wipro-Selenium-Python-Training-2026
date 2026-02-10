@@ -1,0 +1,20 @@
+--- Starting Test Case 1: Thu Feb  5 14:30:05 2026 ---
+Action: Page Title Verified.
+Action: 'Mac' Heading Verified.
+Action: Sorted by Name (A-Z).
+Action: Clicked Add to Cart.
+Action: Searched for 'Monitors'.
+Action: Cleared Search Criteria text box.
+Action: Final Search with Description enabled.
+Result: Test Status PASS
+
+--- Starting Test Case 2 (Repeat Flow) ---
+--- Starting Test Case 1: Thu Feb  5 14:30:14 2026 ---
+Action: Page Title Verified.
+Action: 'Mac' Heading Verified.
+Action: Sorted by Name (A-Z).
+Action: Clicked Add to Cart.
+Action: Searched for 'Monitors'.
+Action: Cleared Search Criteria text box.
+Action: Final Search with Description enabled.
+Result: Test Status PASS

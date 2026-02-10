@@ -1,0 +1,8 @@
+Execution Started: Thu Feb  5 14:22:10 2026
+Action: Filled quantity.
+Action: Filled all visible text/textarea fields.
+Action: Clicked Radio Button.
+Action: Clicked Checkbox.
+Action: Handled all dropdowns.
+Action: Clicked Add to Cart.
+Result: Test Failed. Error: TimeoutException

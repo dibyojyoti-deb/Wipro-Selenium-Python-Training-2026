@@ -1,0 +1,4 @@
+connected to the database successfully
+(101, 'Sam', 20000)
+(102, 'George', 30000)
+(103, 'Roy', 40000)

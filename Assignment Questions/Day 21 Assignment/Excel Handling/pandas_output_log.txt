@@ -1,0 +1,7 @@
+2026-02-11 13:46:10,192 - Source file 'pandas_source.xlsx' created.
+2026-02-11 13:46:10,232 - DataFrame Processed:
+  Product  Quantity  Price  Total
+0       A        10     50    500
+1       B         5    100    500
+2       C         8     75    600
+2026-02-11 13:46:10,544 - Saved log to pandas_output_log.txt and chart to pandas_chart_image.png

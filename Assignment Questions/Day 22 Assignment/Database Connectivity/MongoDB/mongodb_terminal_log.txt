@@ -1,0 +1,11 @@
+--- MongoDB: Connected Successfully ---
+
+Inserted document ID: 698db69a6d644ae7904f6593
+
+Employees in IT Department:
+{'_id': ObjectId('698da4e1a0d2666bef476463'), 'name': 'Anuradha', 'department': 'IT', 'salary': 75000}
+{'_id': ObjectId('698da529a3e71a7e63a7cd7c'), 'name': 'Anuradha', 'department': 'IT', 'salary': 75000}
+{'_id': ObjectId('698da5aa5f0599a788df2c1b'), 'name': 'Anuradha', 'department': 'IT', 'salary': 75000}
+{'_id': ObjectId('698db69a6d644ae7904f6593'), 'name': 'Suresh', 'department': 'IT', 'salary': 55000}
+
+Updated Suresh's salary to 58000.

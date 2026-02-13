@@ -1,0 +1,5 @@
+2026-02-11 13:46:15,526 - Source file 'openpyxl_source.xlsx' created.
+2026-02-11 13:46:15,536 - Row 2: Product A - Total calculated: 500
+2026-02-11 13:46:15,536 - Row 3: Product B - Total calculated: 500
+2026-02-11 13:46:15,536 - Row 4: Product C - Total calculated: 600
+2026-02-11 13:46:15,551 - Saved log to openpyxl_output_log.txt and chart inside openpyxl_summary.xlsx

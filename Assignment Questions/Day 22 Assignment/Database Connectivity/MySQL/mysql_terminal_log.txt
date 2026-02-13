@@ -1,0 +1,7 @@
+--- MySQL: Connected Successfully ---
+
+Employees with salary > 50,000:
+(1, 'Anuradha', 'IT', Decimal('75000.00'))
+
+Inserted new employee: Rajesh
+Updated salary for ID 1 by 10%.

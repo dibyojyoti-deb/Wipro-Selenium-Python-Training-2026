@@ -1,0 +1,18 @@
+--- Loaded DataFrame ---
+       Date Product  Quantity  Price
+0  1/1/2025       A        10     50
+1  1/2/2025       B         5     30
+2  1/3/2025       C        12     40
+3  1/4/2025       A         7     50
+
+--- DataFrame with 'Total' Column ---
+       Date Product  Quantity  Price  Total
+0  1/1/2025       A        10     50    500
+1  1/2/2025       B         5     30    150
+2  1/3/2025       C        12     40    480
+3  1/4/2025       A         7     50    350
+
+--- Sales Statistics (NumPy) ---
+Total Sales: 1480
+Average Daily Sales: 370.00
+Standard Deviation of Daily Sales: 139.46

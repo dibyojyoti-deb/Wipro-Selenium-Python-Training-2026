@@ -1,0 +1,16 @@
+--- Starting Sequential Downloads ---
+Downloaded: www.google.com.txt
+Downloaded: www.yahoo.com.txt
+Downloaded: www.rediff.com.txt
+Downloaded: www.amazon.in.txt
+Sequential download time: 5.2471 seconds
+
+--- Starting Threading Downloads ---
+Downloaded: www.amazon.in.txt
+Downloaded: www.yahoo.com.txt
+Downloaded: www.rediff.com.txt
+Downloaded: www.google.com.txt
+Threading download time: 1.4893 seconds
+
+--- Speed Comparison ---
+Threading was faster by 3.7578 seconds.

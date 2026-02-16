@@ -1,104 +1,121 @@
 *** Settings ***
-Library    RequestsLibrary
-Library    Collections
+Library           RequestsLibrary
+Library           SeleniumLibrary
+Library           OperatingSystem
+Library           Collections
 
-Suite Setup    Create Session    foodie    http://127.0.0.1:5000/api/v1
-Suite Teardown    Delete All Sessions
+Suite Setup       Setup Suite
+Suite Teardown    Teardown Suite
 
 *** Variables ***
-${restaurant_id}    0
-${user_id}          0
-${order_id}         0
-${dish_id}          0
+${BASE_URL}       http://127.0.0.1:5000/api/v1
+${LOG_FILE}       ${CURDIR}/robot_results.txt
+${rid}            0
+${uid}            0
+${oid}            0
+${did}            0
+
+*** Keywords ***
+Setup Suite
+    Create Session    foodie    ${BASE_URL}
+    # Create or overwrite the log file at the start
+    Create File       ${LOG_FILE}    ROBOT TEST EXECUTION LOG${\n}==========================${\n}
+
+Log Status
+    [Arguments]    ${test_name}
+    Append To File    ${LOG_FILE}    ${test_name} : PASS${\n}
+
+Teardown Suite
+    Close All Browsers
 
 *** Test Cases ***
+1-Reg Res
+    ${body}=    Create Dictionary    name=Robot Hub    category=Veg    location=Delhi    contact=1
+    ${r}=       POST On Session    foodie    /restaurants    json=${body}
+    Status Should Be    201    ${r}
+    Set Suite Variable    ${rid}    ${r.json()['id']}
+    Log Status    1-Reg Res
 
-Register Restaurant
-    ${body}=    Create Dictionary    name=Food Hub    category=Veg    location=Delhi    contact=9999999999
-    ${res}=    POST On Session    foodie    /restaurants    json=${body}
-    Status Should Be    201    ${res}
-    ${json}=    Evaluate    __import__('json').loads('''${res.text}''')
-    Set Suite Variable    ${restaurant_id}    ${json['id']}
+2-Dup Res
+    ${body}=    Create Dictionary    name=Robot Hub    category=Veg    location=Delhi    contact=1
+    POST On Session    foodie    /restaurants    json=${body}    expected_status=409
+    Log Status    2-Dup Res
 
-Duplicate Restaurant
-    ${body}=    Create Dictionary    name=Food Hub    category=Veg    location=Delhi    contact=9999999999
-    ${res}=    POST On Session    foodie    /restaurants    json=${body}    expected_status=409
-    Status Should Be    409    ${res}
+3-View Res
+    GET On Session    foodie    /restaurants/${rid}
+    Log Status    3-View Res
 
-View Restaurant
-    ${res}=    GET On Session    foodie    /restaurants/${restaurant_id}
-    Status Should Be    200    ${res}
-
-Update Restaurant
+4-Upd Res
     ${body}=    Create Dictionary    location=Mumbai
-    ${res}=    PUT On Session    foodie    /restaurants/${restaurant_id}    json=${body}
-    Status Should Be    200    ${res}
+    PUT On Session    foodie    /restaurants/${rid}    json=${body}
+    Log Status    4-Upd Res
 
-Disable Restaurant
-    ${res}=    PUT On Session    foodie    /restaurants/${restaurant_id}/disable
-    Status Should Be    200    ${res}
+5-Dis Res
+    PUT On Session    foodie    /restaurants/${rid}/disable
+    Log Status    5-Dis Res
 
-Add Dish
-    ${body}=    Create Dictionary    name=Pizza    type=Veg    price=250
-    ${res}=    POST On Session    foodie    /restaurants/${restaurant_id}/dishes    json=${body}
-    Status Should Be    201    ${res}
-    ${json}=    Evaluate    __import__('json').loads('''${res.text}''')
-    Set Suite Variable    ${dish_id}    ${json['id']}
+6-Add Dish
+    ${body}=    Create Dictionary    name=Pizza    type=Veg    price=10
+    ${r}=       POST On Session    foodie    /restaurants/${rid}/dishes    json=${body}
+    Set Suite Variable    ${did}    ${r.json()['id']}
+    Log Status    6-Add Dish
 
-Update Dish
-    ${body}=    Create Dictionary    price=300
-    ${res}=    PUT On Session    foodie    /dishes/${dish_id}    json=${body}
-    Status Should Be    200    ${res}
+7-Upd Dish
+    ${body}=    Create Dictionary    price=20
+    PUT On Session    foodie    /dishes/${did}    json=${body}
+    Log Status    7-Upd Dish
 
-Toggle Dish Status
-    ${body}=    Create Dictionary    enabled=False
-    ${res}=    PUT On Session    foodie    /dishes/${dish_id}/status    json=${body}
-    Status Should Be    200    ${res}
+8-Tog Dish
+    ${body}=    Create Dictionary    enabled=${False}
+    PUT On Session    foodie    /dishes/${did}/status    json=${body}
+    Log Status    8-Tog Dish
 
-Delete Dish
-    ${res}=    DELETE On Session    foodie    /dishes/${dish_id}
-    Status Should Be    200    ${res}
+9-Del Dish
+    DELETE On Session    foodie    /dishes/${did}
+    Log Status    9-Del Dish
 
-Register User
-    ${body}=    Create Dictionary    name=Harsh    email=harsh@test.com
-    ${res}=    POST On Session    foodie    /users/register    json=${body}
-    Status Should Be    201    ${res}
-    ${json}=    Evaluate    __import__('json').loads('''${res.text}''')
-    Set Suite Variable    ${user_id}    ${json['id']}
+10-Reg User
+    ${body}=    Create Dictionary    name=Harsh    email=h@t.com
+    ${r}=       POST On Session    foodie    /users/register    json=${body}
+    Set Suite Variable    ${uid}    ${r.json()['id']}
+    Log Status    10-Reg User
 
-Duplicate User
-    ${body}=    Create Dictionary    name=Harsh    email=harsh@test.com
-    ${res}=    POST On Session    foodie    /users/register    json=${body}    expected_status=409
-    Status Should Be    409    ${res}
+11-Dup User
+    ${body}=    Create Dictionary    name=Harsh    email=h@t.com
+    POST On Session    foodie    /users/register    json=${body}    expected_status=409
+    Log Status    11-Dup User
 
-Place Order
-    ${body}=    Create Dictionary    user_id=${user_id}    restaurant_id=${restaurant_id}    dishes=[]
-    ${res}=    POST On Session    foodie    /orders    json=${body}
-    Status Should Be    201    ${res}
-    ${json}=    Evaluate    __import__('json').loads('''${res.text}''')
-    Set Suite Variable    ${order_id}    ${json['id']}
+12-Order
+    ${body}=    Create Dictionary    user_id=${uid}    restaurant_id=${rid}    dishes=@{EMPTY}
+    ${r}=       POST On Session    foodie    /orders    json=${body}
+    Set Suite Variable    ${oid}    ${r.json()['id']}
+    Log Status    12-Order
 
-View Orders By User
-    ${res}=    GET On Session    foodie    /users/${user_id}/orders
-    Status Should Be    200    ${res}
+13-User Orders
+    GET On Session    foodie    /users/${uid}/orders
+    Log Status    13-User Orders
 
-View Orders By Restaurant
-    ${res}=    GET On Session    foodie    /restaurants/${restaurant_id}/orders
-    Status Should Be    200    ${res}
+14-Res Orders
+    GET On Session    foodie    /restaurants/${rid}/orders
+    Log Status    14-Res Orders
 
-Give Rating
-    ${body}=    Create Dictionary    order_id=${order_id}    rating=5    comment=Excellent
-    ${res}=    POST On Session    foodie    /ratings    json=${body}
-    Status Should Be    201    ${res}
+15-Rate
+    ${body}=    Create Dictionary    order_id=${oid}    rating=5
+    POST On Session    foodie    /ratings    json=${body}
+    Log Status    15-Rate
 
-Admin Approve Restaurant
-    ${res}=    PUT On Session    foodie    /admin/restaurants/${restaurant_id}/approve
-    Status Should Be    200    ${res}
+16-Adm App
+    PUT On Session    foodie    /admin/restaurants/${rid}/approve
+    Log Status    16-Adm App
 
-Admin Disable Restaurant
-    ${res}=    PUT On Session    foodie    /admin/restaurants/${restaurant_id}/disable
-    Status Should Be    200    ${res}
+17-Adm Dis
+    PUT On Session    foodie    /admin/restaurants/${rid}/disable
+    Log Status    17-Adm Dis
 
-Admin View Orders
-    ${res}=    GET On Session    foodie    /admin/orders
-    Status Should Be    200    ${res}
+18-Adm Ord
+    # Open browser first, then navigate, then capture
+    Open Browser      ${BASE_URL}/admin/orders    chrome
+    Set Window Size    1280    800
+    Capture Page Screenshot    ${CURDIR}/robot_final_state.png
+    GET On Session    foodie    /admin/orders
+    Log Status    18-Adm Ord

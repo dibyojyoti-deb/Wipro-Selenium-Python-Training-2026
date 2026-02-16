@@ -17,15 +17,9 @@ rating_counter = 1
 def register_restaurant():
     global restaurant_counter
     data = request.json
-
-    required_fields = ["name", "category", "location", "contact"]
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing fields"}), 400
-
     for r in restaurants.values():
         if r["name"] == data["name"]:
             return jsonify({"error": "Restaurant already exists"}), 409
-
     restaurant = {
         "id": restaurant_counter,
         "name": data["name"],
@@ -35,12 +29,9 @@ def register_restaurant():
         "status": "pending",
         "dishes": []
     }
-
     restaurants[restaurant_counter] = restaurant
     restaurant_counter += 1
-
     return jsonify(restaurant), 201
-
 
 @app.route("/api/v1/restaurants/<int:restaurant_id>", methods=["GET"])
 def view_restaurant(restaurant_id):
@@ -48,196 +39,109 @@ def view_restaurant(restaurant_id):
         return jsonify({"error": "Not found"}), 404
     return jsonify(restaurants[restaurant_id]), 200
 
-
 @app.route("/api/v1/restaurants/<int:restaurant_id>", methods=["PUT"])
 def update_restaurant(restaurant_id):
     if restaurant_id not in restaurants:
         return jsonify({"error": "Not found"}), 404
-
-    data = request.json
-    restaurants[restaurant_id].update(data)
+    restaurants[restaurant_id].update(request.json)
     return jsonify(restaurants[restaurant_id]), 200
-
 
 @app.route("/api/v1/restaurants/<int:restaurant_id>/disable", methods=["PUT"])
 def disable_restaurant(restaurant_id):
     if restaurant_id not in restaurants:
         return jsonify({"error": "Not found"}), 404
-
     restaurants[restaurant_id]["status"] = "disabled"
     return jsonify({"message": "Restaurant disabled"}), 200
 
 @app.route("/api/v1/restaurants/<int:restaurant_id>/dishes", methods=["POST"])
 def add_dish(restaurant_id):
     global dish_counter
-
     if restaurant_id not in restaurants:
         return jsonify({"error": "Restaurant not found"}), 404
-
-    data = request.json
-    required_fields = ["name", "type", "price"]
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing fields"}), 400
-
-    dish = {
-        "id": dish_counter,
-        "restaurant_id": restaurant_id,
-        "name": data["name"],
-        "type": data["type"],
-        "price": data["price"],
-        "enabled": True
-    }
-
+    dish = {"id": dish_counter, "restaurant_id": restaurant_id, **request.json, "enabled": True}
     restaurants[restaurant_id]["dishes"].append(dish)
     dish_counter += 1
-
     return jsonify(dish), 201
-
 
 @app.route("/api/v1/dishes/<int:dish_id>", methods=["PUT"])
 def update_dish(dish_id):
     for r in restaurants.values():
-        for dish in r["dishes"]:
-            if dish["id"] == dish_id:
-                dish.update(request.json)
-                return jsonify(dish), 200
+        for d in r["dishes"]:
+            if d["id"] == dish_id:
+                d.update(request.json)
+                return jsonify(d), 200
     return jsonify({"error": "Not found"}), 404
-
 
 @app.route("/api/v1/dishes/<int:dish_id>/status", methods=["PUT"])
-def toggle_dish_status(dish_id):
+def toggle_dish(dish_id):
     for r in restaurants.values():
-        for dish in r["dishes"]:
-            if dish["id"] == dish_id:
-                dish["enabled"] = request.json.get("enabled", True)
+        for d in r["dishes"]:
+            if d["id"] == dish_id:
+                d["enabled"] = request.json.get("enabled", True)
                 return jsonify({"message": "Status updated"}), 200
     return jsonify({"error": "Not found"}), 404
-
 
 @app.route("/api/v1/dishes/<int:dish_id>", methods=["DELETE"])
 def delete_dish(dish_id):
     for r in restaurants.values():
-        for dish in r["dishes"]:
-            if dish["id"] == dish_id:
-                r["dishes"].remove(dish)
-                return jsonify({"message": "Dish deleted"}), 200
+        for d in r["dishes"]:
+            if d["id"] == dish_id:
+                r["dishes"].remove(d)
+                return jsonify({"message": "Deleted"}), 200
     return jsonify({"error": "Not found"}), 404
-
 
 @app.route("/api/v1/users/register", methods=["POST"])
 def register_user():
     global user_counter
     data = request.json
-
     for u in users.values():
         if u["email"] == data["email"]:
-            return jsonify({"error": "User already exists"}), 409
-
-    user = {
-        "id": user_counter,
-        "name": data["name"],
-        "email": data["email"]
-    }
-
+            return jsonify({"error": "Exists"}), 409
+    user = {"id": user_counter, **data}
     users[user_counter] = user
     user_counter += 1
-
     return jsonify(user), 201
-
-
-@app.route("/api/v1/restaurants/search", methods=["GET"])
-def search_restaurants():
-    name = request.args.get("name")
-    location = request.args.get("location")
-
-    result = [
-        r for r in restaurants.values()
-        if (not name or name.lower() in r["name"].lower())
-        and (not location or location.lower() in r["location"].lower())
-    ]
-
-    return jsonify(result), 200
 
 @app.route("/api/v1/orders", methods=["POST"])
 def place_order():
     global order_counter
-    data = request.json
-
-    if data["user_id"] not in users or data["restaurant_id"] not in restaurants:
-        return jsonify({"error": "Invalid data"}), 400
-
-    order = {
-        "id": order_counter,
-        "user_id": data["user_id"],
-        "restaurant_id": data["restaurant_id"],
-        "dishes": data.get("dishes", []),
-        "status": "placed"
-    }
-
+    order = {"id": order_counter, **request.json, "status": "placed"}
     orders[order_counter] = order
     order_counter += 1
-
     return jsonify(order), 201
 
+@app.route("/api/v1/users/<int:user_id>/orders", methods=["GET"])
+def user_orders(user_id):
+    return jsonify([o for o in orders.values() if o["user_id"] == user_id]), 200
 
 @app.route("/api/v1/restaurants/<int:restaurant_id>/orders", methods=["GET"])
-def view_orders_by_restaurant(restaurant_id):
-    result = [o for o in orders.values() if o["restaurant_id"] == restaurant_id]
-    return jsonify(result), 200
-
-
-@app.route("/api/v1/users/<int:user_id>/orders", methods=["GET"])
-def view_orders_by_user(user_id):
-    result = [o for o in orders.values() if o["user_id"] == user_id]
-    return jsonify(result), 200
+def res_orders(restaurant_id):
+    return jsonify([o for o in orders.values() if o["restaurant_id"] == restaurant_id]), 200
 
 @app.route("/api/v1/ratings", methods=["POST"])
 def give_rating():
     global rating_counter
-    data = request.json
-
-    if data["order_id"] not in orders:
-        return jsonify({"error": "Invalid order"}), 400
-
-    rating = {
-        "id": rating_counter,
-        "order_id": data["order_id"],
-        "rating": data["rating"],
-        "comment": data.get("comment", "")
-    }
-
+    if request.json["order_id"] not in orders: return jsonify({"error": "No order"}), 404
+    rating = {"id": rating_counter, **request.json}
     ratings[rating_counter] = rating
     rating_counter += 1
-
     return jsonify(rating), 201
 
 @app.route("/api/v1/admin/restaurants/<int:restaurant_id>/approve", methods=["PUT"])
-def approve_restaurant(restaurant_id):
-    if restaurant_id not in restaurants:
-        return jsonify({"error": "Not found"}), 404
-
+def approve(restaurant_id):
+    if restaurant_id not in restaurants: return jsonify({"error": "Not found"}), 404
     restaurants[restaurant_id]["status"] = "approved"
-    return jsonify({"message": "Restaurant approved"}), 200
-
+    return jsonify({"message": "Approved"}), 200
 
 @app.route("/api/v1/admin/restaurants/<int:restaurant_id>/disable", methods=["PUT"])
-def admin_disable_restaurant(restaurant_id):
-    if restaurant_id not in restaurants:
-        return jsonify({"error": "Not found"}), 404
-
+def admin_disable(restaurant_id):
+    if restaurant_id not in restaurants: return jsonify({"error": "Not found"}), 404
     restaurants[restaurant_id]["status"] = "disabled"
-    return jsonify({"message": "Restaurant disabled by admin"}), 200
-
+    return jsonify({"message": "Disabled"}), 200
 
 @app.route("/api/v1/admin/orders", methods=["GET"])
-def view_admin_orders():
+def admin_orders():
     return jsonify(list(orders.values())), 200
-
-
-@app.route("/api/v1/admin/feedback", methods=["GET"])
-def view_feedback():
-    return jsonify(list(ratings.values())), 200
-
 
 if __name__ == "__main__":
     app.run(debug=True)
